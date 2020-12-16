@@ -14,28 +14,31 @@
 require 'airport'
 
 describe Airport do
+
+  let(:airport) {Airport.new}
+
   describe '#clear_for_landing' do
     it 'takes a plane and adds to the hangar' do
-      airport = Airport.new
       airport.clear_for_landing("BA123")
       expect(airport.hangar).to include "BA123"
     end
   end
 
   describe '#clear_for_takeoff' do
+    before(:each) do
+      airport.clear_for_landing("BA123")
+    end
     it 'takes a plane and removes it from the hangar' do
-      airport = Airport.new
       airport.clear_for_landing("BA123")
       airport.clear_for_takeoff("BA123")
       expect(airport.hangar).not_to include("BA123")
     end
 
     it 'returns the flight number of the plane that took off' do
-      airport = Airport.new
       airport.clear_for_landing("BA123")
       actual = airport.clear_for_takeoff("BA123")
       expect = "BA123"
-      expect(actual).to eq expected
+      expect(actual).to eq expect
     end
   end
 
